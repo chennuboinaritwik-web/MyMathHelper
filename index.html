@@ -3,139 +3,252 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MyMathHelper</title>
+<title>MyMathHelper | Smart Math Learning</title>
 
 <style>
 :root {
-  --bg: #f4f6f9;
-  --card: #ffffff;
-  --text: #2c3e50;
-  --button: #4f46e5;
-  --button-hover: #4338ca;
+  --bg:#f4f6f9;
+  --card:#ffffff;
+  --text:#1e293b;
+  --accent:#6366f1;
+  --accent-hover:#4f46e5;
 }
 
 body.dark {
-  --bg: #0f172a;
-  --card: #1e293b;
-  --text: #f1f5f9;
-  --button: #6366f1;
-  --button-hover: #818cf8;
+  --bg:#0f172a;
+  --card:#1e293b;
+  --text:#f1f5f9;
+  --accent:#818cf8;
+  --accent-hover:#6366f1;
 }
 
+* { margin:0; padding:0; box-sizing:border-box; }
+
 body {
-  margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  transition: 0.3s ease;
+  background:var(--bg);
+  color:var(--text);
+  transition:0.3s ease;
+  scroll-behavior:smooth;
+}
+
+/* Navbar */
+nav {
+  position:fixed;
+  width:100%;
+  top:0;
+  background:var(--card);
+  padding:15px 30px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  box-shadow:0 4px 15px rgba(0,0,0,0.1);
+  z-index:1000;
+}
+
+nav h2 { color:var(--accent); }
+
+nav ul {
+  list-style:none;
+  display:flex;
+  gap:20px;
+}
+
+nav ul li a {
+  text-decoration:none;
+  color:var(--text);
+  font-weight:500;
+}
+
+nav ul li a:hover { color:var(--accent); }
+
+.toggle {
+  cursor:pointer;
+  padding:6px 12px;
+  background:var(--accent);
+  color:white;
+  border-radius:6px;
+}
+
+/* Sections */
+section {
+  padding:100px 20px;
+  min-height:100vh;
+  text-align:center;
+  animation:fadeIn 1s ease;
 }
 
 .container {
-  background: var(--card);
-  padding: 40px;
-  border-radius: 15px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-  text-align: center;
-  width: 350px;
-  transition: 0.3s ease;
+  max-width:800px;
+  margin:auto;
 }
 
-h1 {
-  margin-bottom: 20px;
+/* Cards */
+.card {
+  background:var(--card);
+  padding:30px;
+  border-radius:15px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.1);
+  margin-top:20px;
+  transition:transform 0.3s;
 }
 
-input {
-  padding: 10px;
-  width: 100px;
-  margin: 5px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+.card:hover { transform:translateY(-5px); }
+
+input, button {
+  padding:10px;
+  margin:5px;
+  border-radius:8px;
+  border:1px solid #ccc;
 }
 
-.buttons button {
-  margin: 5px;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 8px;
-  background: var(--button);
-  color: white;
-  cursor: pointer;
-  transition: 0.2s;
+button {
+  background:var(--accent);
+  color:white;
+  border:none;
+  cursor:pointer;
 }
 
-.buttons button:hover {
-  background: var(--button-hover);
+button:hover { background:var(--accent-hover); }
+
+.history {
+  text-align:left;
+  max-height:150px;
+  overflow-y:auto;
+  margin-top:10px;
+  font-size:14px;
 }
 
-.result {
-  margin-top: 20px;
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.toggle {
-  margin-top: 20px;
-  cursor: pointer;
-  font-size: 14px;
-  opacity: 0.8;
+/* Animation */
+@keyframes fadeIn {
+  from { opacity:0; transform:translateY(20px); }
+  to { opacity:1; transform:translateY(0); }
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
-  <h1>MyMathHelper</h1>
+<nav>
+  <h2>MyMathHelper</h2>
+  <ul>
+    <li><a href="#home">Home</a></li>
+    <li><a href="#calculator">Calculator</a></li>
+    <li><a href="#quiz">Quiz</a></li>
+    <li><a href="#aibot">AI Bot</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+  <div class="toggle" onclick="toggleDarkMode()">Dark Mode</div>
+</nav>
 
-  <input type="number" id="num1" placeholder="Number 1">
-  <input type="number" id="num2" placeholder="Number 2">
-
-  <div class="buttons">
-    <button onclick="calculate('+')">+</button>
-    <button onclick="calculate('-')">−</button>
-    <button onclick="calculate('*')">×</button>
-    <button onclick="calculate('/')">÷</button>
+<section id="home">
+  <div class="container">
+    <h1>Welcome to MyMathHelper</h1>
+    <p>Your smart interactive math learning platform.</p>
   </div>
+</section>
 
-  <div class="result" id="result"></div>
+<section id="calculator">
+  <div class="container">
+    <h1>Calculator</h1>
+    <div class="card">
+      <input type="number" id="num1" placeholder="Number 1">
+      <input type="number" id="num2" placeholder="Number 2"><br>
+      <button onclick="calculate('+')">+</button>
+      <button onclick="calculate('-')">−</button>
+      <button onclick="calculate('*')">×</button>
+      <button onclick="calculate('/')">÷</button>
+      <h2 id="result"></h2>
+      <div class="history" id="history"></div>
+    </div>
+  </div>
+</section>
 
-  <div class="toggle" onclick="toggleDarkMode()">🌙 Toggle Dark Mode</div>
-</div>
+<section id="quiz">
+  <div class="container">
+    <h1>Mini Quiz</h1>
+    <div class="card">
+      <p id="question"></p>
+      <input type="number" id="quizAnswer">
+      <button onclick="checkAnswer()">Submit</button>
+      <p id="quizResult"></p>
+    </div>
+  </div>
+</section>
+
+<section id="aibot">
+  <div class="container">
+    <h1>AI Math Helper</h1>
+    <div class="card">
+      <input type="text" id="aiInput" placeholder="Ask about addition, multiplication...">
+      <button onclick="aiExplain()">Ask</button>
+      <p id="aiResponse"></p>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="container">
+    <h1>About the Maker</h1>
+    <div class="card">
+      <p>Hello! I'm the creator of MyMathHelper.</p>
+      <p>This platform was built to make math interactive, simple, and fun.</p>
+      <p>Designed with modern web technology and creativity.</p>
+    </div>
+  </div>
+</section>
 
 <script>
-function calculate(operator) {
-  let n1 = parseFloat(document.getElementById("num1").value);
-  let n2 = parseFloat(document.getElementById("num2").value);
+let historyLog = [];
 
-  if (isNaN(n1) || isNaN(n2)) {
-    document.getElementById("result").innerText = "Please enter valid numbers.";
-    return;
-  }
+function calculate(op) {
+  let n1 = parseFloat(num1.value);
+  let n2 = parseFloat(num2.value);
+  if(isNaN(n1)||isNaN(n2)) return result.innerText="Enter valid numbers.";
 
-  let result;
+  let res;
+  if(op==='+') res=n1+n2;
+  if(op==='-') res=n1-n2;
+  if(op==='*') res=n1*n2;
+  if(op==='/' && n2!==0) res=n1/n2;
+  if(op==='/' && n2===0) return result.innerText="Cannot divide by zero.";
 
-  switch(operator) {
-    case '+': result = n1 + n2; break;
-    case '-': result = n1 - n2; break;
-    case '*': result = n1 * n2; break;
-    case '/':
-      if (n2 === 0) {
-        document.getElementById("result").innerText = "Cannot divide by zero.";
-        return;
-      }
-      result = n1 / n2;
-      break;
-  }
-
-  document.getElementById("result").innerText = "Result: " + result;
+  result.innerText="Result: "+res;
+  historyLog.push(`${n1} ${op} ${n2} = ${res}`);
+  history.innerHTML=historyLog.join("<br>");
 }
 
-function toggleDarkMode() {
+function toggleDarkMode(){
   document.body.classList.toggle("dark");
+}
+
+/* Quiz */
+let numA = Math.floor(Math.random()*10);
+let numB = Math.floor(Math.random()*10);
+question.innerText=`What is ${numA} + ${numB}?`;
+
+function checkAnswer(){
+  let correct=numA+numB;
+  if(parseInt(quizAnswer.value)===correct){
+    quizResult.innerText="Correct! 🎉";
+  } else {
+    quizResult.innerText="Try again!";
+  }
+}
+
+/* Simple AI */
+function aiExplain(){
+  let input=aiInput.value.toLowerCase();
+  if(input.includes("addition"))
+    aiResponse.innerText="Addition means combining two numbers to get their total.";
+  else if(input.includes("subtraction"))
+    aiResponse.innerText="Subtraction means taking one number away from another.";
+  else if(input.includes("multiplication"))
+    aiResponse.innerText="Multiplication is repeated addition.";
+  else if(input.includes("division"))
+    aiResponse.innerText="Division splits a number into equal parts.";
+  else
+    aiResponse.innerText="Ask about addition, subtraction, multiplication, or division.";
 }
 </script>
 
