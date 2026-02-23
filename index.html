@@ -1,4 +1,213 @@
 <!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MyMathHelper Pro</title>
+
+<link rel="manifest" href="manifest.json">
+
+<style>
+:root{
+--bg:#0f172a;
+--card:#1e293b;
+--accent:#6366f1;
+--text:#f1f5f9;
+}
+
+body{
+margin:0;
+font-family:Segoe UI;
+background:var(--bg);
+color:var(--text);
+overflow-x:hidden;
+}
+
+nav{
+text-align:center;
+padding:15px;
+background:#111827;
+font-weight:bold;
+font-size:20px;
+}
+
+.container{
+max-width:600px;
+margin:auto;
+padding:20px;
+}
+
+.card{
+background:var(--card);
+padding:20px;
+margin-top:20px;
+border-radius:15px;
+box-shadow:0 10px 25px rgba(0,0,0,0.4);
+}
+
+select,input,button{
+padding:10px;
+margin:5px;
+border-radius:8px;
+border:none;
+}
+
+button{
+background:var(--accent);
+color:white;
+cursor:pointer;
+}
+
+button:hover{opacity:0.8;}
+
+.badge{
+display:inline-block;
+background:gold;
+color:black;
+padding:5px 10px;
+border-radius:20px;
+margin:5px;
+font-size:12px;
+}
+
+.timer{
+font-weight:bold;
+color:#f87171;
+}
+
+.bg span{
+position:absolute;
+font-size:30px;
+opacity:0.07;
+animation:float 20s linear infinite;
+}
+
+@keyframes float{
+from{transform:translateY(100vh);}
+to{transform:translateY(-10vh);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg">
+<span style="left:10%">+</span>
+<span style="left:30%">−</span>
+<span style="left:50%">×</span>
+<span style="left:70%">÷</span>
+<span style="left:90%">π</span>
+</div>
+
+<nav>MyMathHelper 🚀</nav>
+
+<div class="container">
+
+<div class="card">
+<h3>Quiz Settings</h3>
+
+<select id="grade">
+<option value="1">1st Grade</option>
+<option value="2">2nd Grade</option>
+<option value="3">3rd Grade</option>
+<option value="4">4th Grade</option>
+<option value="5">5th Grade</option>
+<option value="6">6th Grade</option>
+</select>
+
+<button onclick="startQuiz()">Start Timed Quiz</button>
+
+<p class="timer">Time Left: <span id="time">30</span>s</p>
+<p id="question"></p>
+<input type="number" id="answer" placeholder="Your answer">
+<button onclick="checkAnswer()">Submit</button>
+<p id="result"></p>
+
+<p>XP: <span id="xp">0</span></p>
+<p>Level: <span id="level">1</span></p>
+
+<div id="badges"></div>
+
+</div>
+
+</div>
+
+<script>
+let num1,num2,correctAnswer;
+let xp=localStorage.getItem("xp")?parseInt(localStorage.getItem("xp")):0;
+let level=Math.floor(xp/100)+1;
+let timer;
+let timeLeft=30;
+
+document.getElementById("xp").innerText=xp;
+document.getElementById("level").innerText=level;
+
+function startQuiz(){
+timeLeft=30;
+timer=setInterval(()=>{
+timeLeft--;
+document.getElementById("time").innerText=timeLeft;
+if(timeLeft<=0){
+clearInterval(timer);
+alert("Time's up!");
+}
+},1000);
+generateQuestion();
+}
+
+function generateQuestion(){
+let grade=parseInt(document.getElementById("grade").value);
+let max=grade*10;
+num1=Math.floor(Math.random()*max);
+num2=Math.floor(Math.random()*max);
+correctAnswer=num1+num2;
+document.getElementById("question").innerText=`${num1} + ${num2} = ?`;
+}
+
+function checkAnswer(){
+let ans=parseInt(document.getElementById("answer").value);
+if(ans===correctAnswer){
+document.getElementById("result").innerText="Correct 🎉";
+xp+=10;
+playSound(true);
+}else{
+document.getElementById("result").innerText="Wrong!";
+playSound(false);
+}
+localStorage.setItem("xp",xp);
+updateLevel();
+generateQuestion();
+}
+
+function updateLevel(){
+level=Math.floor(xp/100)+1;
+document.getElementById("xp").innerText=xp;
+document.getElementById("level").innerText=level;
+checkBadges();
+}
+
+function checkBadges(){
+let badgeDiv=document.getElementById("badges");
+badgeDiv.innerHTML="";
+if(level>=3) badgeDiv.innerHTML+='<div class="badge">Math Starter</div>';
+if(level>=5) badgeDiv.innerHTML+='<div class="badge">Algebra Pro</div>';
+if(level>=8) badgeDiv.innerHTML+='<div class="badge">Math Master</div>';
+}
+
+function playSound(correct){
+let audio=new Audio(correct?
+"https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg":
+"https://actions.google.com/sounds/v1/cartoon/boing.ogg");
+audio.play();
+}
+
+/* PWA Service Worker */
+if('serviceWorker' in navigator){
+navigator.serviceWorker.register('sw.js');
+}
+</script>
+
+</body>
+</html><!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -621,5 +830,6 @@ displayLeaderboard();
 
 </body>
 </html>
+
 
 
