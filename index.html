@@ -1,255 +1,225 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MyMathHelper | Smart Math Learning</title>
+<title>MyMathHelper Ultimate</title>
 
 <style>
-:root {
-  --bg:#f4f6f9;
-  --card:#ffffff;
-  --text:#1e293b;
-  --accent:#6366f1;
-  --accent-hover:#4f46e5;
+:root{
+--bg:#0f172a;
+--card:#1e293b;
+--accent:#6366f1;
+--text:#f1f5f9;
 }
 
-body.dark {
-  --bg:#0f172a;
-  --card:#1e293b;
-  --text:#f1f5f9;
-  --accent:#818cf8;
-  --accent-hover:#6366f1;
+body{
+margin:0;
+font-family:Segoe UI;
+background:var(--bg);
+color:var(--text);
+overflow-x:hidden;
 }
 
-* { margin:0; padding:0; box-sizing:border-box; }
-
-body {
-  font-family: 'Segoe UI', sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  transition:0.3s ease;
-  scroll-behavior:smooth;
+/* Floating symbols */
+.bg span{
+position:absolute;
+font-size:30px;
+opacity:0.08;
+animation:float 20s linear infinite;
 }
 
-/* Navbar */
-nav {
-  position:fixed;
-  width:100%;
-  top:0;
-  background:var(--card);
-  padding:15px 30px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  box-shadow:0 4px 15px rgba(0,0,0,0.1);
-  z-index:1000;
+@keyframes float{
+from{transform:translateY(100vh) rotate(0);}
+to{transform:translateY(-10vh) rotate(360deg);}
 }
 
-nav h2 { color:var(--accent); }
-
-nav ul {
-  list-style:none;
-  display:flex;
-  gap:20px;
+nav{
+text-align:center;
+padding:15px;
+background:#111827;
+font-weight:bold;
+font-size:20px;
 }
 
-nav ul li a {
-  text-decoration:none;
-  color:var(--text);
-  font-weight:500;
+.container{
+max-width:600px;
+margin:auto;
+padding:20px;
 }
 
-nav ul li a:hover { color:var(--accent); }
-
-.toggle {
-  cursor:pointer;
-  padding:6px 12px;
-  background:var(--accent);
-  color:white;
-  border-radius:6px;
+.card{
+background:var(--card);
+padding:20px;
+margin-top:20px;
+border-radius:15px;
+box-shadow:0 10px 25px rgba(0,0,0,0.4);
 }
 
-/* Sections */
-section {
-  padding:100px 20px;
-  min-height:100vh;
-  text-align:center;
-  animation:fadeIn 1s ease;
+select,input,button{
+padding:10px;
+margin:5px;
+border-radius:8px;
+border:none;
 }
 
-.container {
-  max-width:800px;
-  margin:auto;
+button{
+background:var(--accent);
+color:white;
+cursor:pointer;
 }
 
-/* Cards */
-.card {
-  background:var(--card);
-  padding:30px;
-  border-radius:15px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.1);
-  margin-top:20px;
-  transition:transform 0.3s;
-}
+button:hover{opacity:0.8;}
 
-.card:hover { transform:translateY(-5px); }
-
-input, button {
-  padding:10px;
-  margin:5px;
-  border-radius:8px;
-  border:1px solid #ccc;
-}
-
-button {
-  background:var(--accent);
-  color:white;
-  border:none;
-  cursor:pointer;
-}
-
-button:hover { background:var(--accent-hover); }
-
-.history {
-  text-align:left;
-  max-height:150px;
-  overflow-y:auto;
-  margin-top:10px;
-  font-size:14px;
-}
-
-/* Animation */
-@keyframes fadeIn {
-  from { opacity:0; transform:translateY(20px); }
-  to { opacity:1; transform:translateY(0); }
+.leaderboard{
+margin-top:10px;
+font-size:14px;
 }
 </style>
 </head>
 
 <body>
 
-<nav>
-  <h2>MyMathHelper</h2>
-  <ul>
-    <li><a href="#home">Home</a></li>
-    <li><a href="#calculator">Calculator</a></li>
-    <li><a href="#quiz">Quiz</a></li>
-    <li><a href="#aibot">AI Bot</a></li>
-    <li><a href="#about">About</a></li>
-  </ul>
-  <div class="toggle" onclick="toggleDarkMode()">Dark Mode</div>
-</nav>
+<div class="bg">
+<span style="left:10%">+</span>
+<span style="left:30%">−</span>
+<span style="left:50%">×</span>
+<span style="left:70%">÷</span>
+<span style="left:90%">π</span>
+</div>
 
-<section id="home">
-  <div class="container">
-    <h1>Welcome to MyMathHelper</h1>
-    <p>Your smart interactive math learning platform.</p>
-  </div>
-</section>
+<nav>MyMathHelper 📚</nav>
 
-<section id="calculator">
-  <div class="container">
-    <h1>Calculator</h1>
-    <div class="card">
-      <input type="number" id="num1" placeholder="Number 1">
-      <input type="number" id="num2" placeholder="Number 2"><br>
-      <button onclick="calculate('+')">+</button>
-      <button onclick="calculate('-')">−</button>
-      <button onclick="calculate('*')">×</button>
-      <button onclick="calculate('/')">÷</button>
-      <h2 id="result"></h2>
-      <div class="history" id="history"></div>
-    </div>
-  </div>
-</section>
+<div class="container">
 
-<section id="quiz">
-  <div class="container">
-    <h1>Mini Quiz</h1>
-    <div class="card">
-      <p id="question"></p>
-      <input type="number" id="quizAnswer">
-      <button onclick="checkAnswer()">Submit</button>
-      <p id="quizResult"></p>
-    </div>
-  </div>
-</section>
+<div class="card">
+<h2>Quiz Settings</h2>
 
-<section id="aibot">
-  <div class="container">
-    <h1>AI Math Helper</h1>
-    <div class="card">
-      <input type="text" id="aiInput" placeholder="Ask about addition, multiplication...">
-      <button onclick="aiExplain()">Ask</button>
-      <p id="aiResponse"></p>
-    </div>
-  </div>
-</section>
+<select id="grade">
+<option value="1">1st Grade</option>
+<option value="2">2nd Grade</option>
+<option value="3">3rd Grade</option>
+<option value="4">4th Grade</option>
+<option value="5">5th Grade</option>
+<option value="6">6th Grade</option>
+</select>
 
-<section id="about">
-  <div class="container">
-    <h1>About the Maker</h1>
-    <div class="card">
-      <p>Hello! I'm the creator of MyMathHelper.</p>
-      <p>This platform was built to make math interactive, simple, and fun.</p>
-      <p>Designed with modern web technology and creativity.</p>
-    </div>
-  </div>
-</section>
+<select id="topic">
+<option value="addition">Addition</option>
+<option value="subtraction">Subtraction</option>
+<option value="multiplication">Multiplication</option>
+<option value="division">Division</option>
+<option value="algebra">Basic Algebra</option>
+<option value="geometry">Points & Lines</option>
+</select>
+
+<select id="difficulty">
+<option value="easy">Easy</option>
+<option value="medium">Medium</option>
+<option value="hard">Hard</option>
+</select>
+
+<button onclick="generateQuestion()">Start Quiz</button>
+
+<p id="question"></p>
+<input type="text" id="answer" placeholder="Your answer">
+<button onclick="checkAnswer()">Submit</button>
+<p id="result"></p>
+<p>Score: <span id="score">0</span></p>
+
+</div>
+
+<div class="card">
+<h2>Leaderboard 🏆</h2>
+<input type="text" id="username" placeholder="Your name">
+<button onclick="saveScore()">Save Score</button>
+<div class="leaderboard" id="leaderboard"></div>
+</div>
+
+</div>
 
 <script>
-let historyLog = [];
+let num1,num2,correctAnswer;
+let score=0;
 
-function calculate(op) {
-  let n1 = parseFloat(num1.value);
-  let n2 = parseFloat(num2.value);
-  if(isNaN(n1)||isNaN(n2)) return result.innerText="Enter valid numbers.";
-
-  let res;
-  if(op==='+') res=n1+n2;
-  if(op==='-') res=n1-n2;
-  if(op==='*') res=n1*n2;
-  if(op==='/' && n2!==0) res=n1/n2;
-  if(op==='/' && n2===0) return result.innerText="Cannot divide by zero.";
-
-  result.innerText="Result: "+res;
-  historyLog.push(`${n1} ${op} ${n2} = ${res}`);
-  history.innerHTML=historyLog.join("<br>");
+function numberRange(){
+let grade=parseInt(gradeSelect.value);
+return grade*20;
 }
 
-function toggleDarkMode(){
-  document.body.classList.toggle("dark");
-}
+function generateQuestion(){
+let topic=topicSelect.value;
+let difficulty=difficultySelect.value;
+let max=numberRange();
 
-/* Quiz */
-let numA = Math.floor(Math.random()*10);
-let numB = Math.floor(Math.random()*10);
-question.innerText=`What is ${numA} + ${numB}?`;
+if(difficulty==="easy") max/=2;
+if(difficulty==="hard") max*=2;
+
+num1=Math.floor(Math.random()*max);
+num2=Math.floor(Math.random()*max);
+
+if(topic==="addition"){
+correctAnswer=num1+num2;
+question.innerText=`${num1} + ${num2} = ?`;
+}
+else if(topic==="subtraction"){
+correctAnswer=num1-num2;
+question.innerText=`${num1} - ${num2} = ?`;
+}
+else if(topic==="multiplication"){
+correctAnswer=num1*num2;
+question.innerText=`${num1} × ${num2} = ?`;
+}
+else if(topic==="division"){
+num2=Math.floor(Math.random()*9)+1;
+correctAnswer=(num1*num2)/num2;
+question.innerText=`${num1*num2} ÷ ${num2} = ?`;
+}
+else if(topic==="algebra"){
+correctAnswer=num1;
+question.innerText=`Solve: x + ${num2} = ${num1+num2}`;
+}
+else if(topic==="geometry"){
+correctAnswer="point";
+question.innerText=`What is a location with no size called?`;
+}
+}
 
 function checkAnswer(){
-  let correct=numA+numB;
-  if(parseInt(quizAnswer.value)===correct){
-    quizResult.innerText="Correct! 🎉";
-  } else {
-    quizResult.innerText="Try again!";
-  }
+let user=answer.value.trim().toLowerCase();
+
+if(user==correctAnswer){
+result.innerText="Correct 🎉";
+score++;
+}else{
+result.innerText="Wrong! Correct: "+correctAnswer;
+}
+document.getElementById("score").innerText=score;
+answer.value="";
 }
 
-/* Simple AI */
-function aiExplain(){
-  let input=aiInput.value.toLowerCase();
-  if(input.includes("addition"))
-    aiResponse.innerText="Addition means combining two numbers to get their total.";
-  else if(input.includes("subtraction"))
-    aiResponse.innerText="Subtraction means taking one number away from another.";
-  else if(input.includes("multiplication"))
-    aiResponse.innerText="Multiplication is repeated addition.";
-  else if(input.includes("division"))
-    aiResponse.innerText="Division splits a number into equal parts.";
-  else
-    aiResponse.innerText="Ask about addition, subtraction, multiplication, or division.";
+function saveScore(){
+let name=username.value;
+if(!name)return alert("Enter name!");
+
+let scores=JSON.parse(localStorage.getItem("scores"))||[];
+scores.push({name:name,score:score});
+scores.sort((a,b)=>b.score-a.score);
+scores=scores.slice(0,10);
+
+localStorage.setItem("scores",JSON.stringify(scores));
+displayLeaderboard();
 }
+
+function displayLeaderboard(){
+let scores=JSON.parse(localStorage.getItem("scores"))||[];
+leaderboard.innerHTML=scores.map(s=>`${s.name}: ${s.score}`).join("<br>");
+}
+
+const gradeSelect=document.getElementById("grade");
+const topicSelect=document.getElementById("topic");
+const difficultySelect=document.getElementById("difficulty");
+
+displayLeaderboard();
 </script>
 
 </body>
