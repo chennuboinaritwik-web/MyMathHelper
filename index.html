@@ -3,6 +3,148 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MyMathHelper</title>
+
+<style>
+:root {
+  --bg: #f4f6f9;
+  --card: #ffffff;
+  --text: #2c3e50;
+  --button: #4f46e5;
+  --button-hover: #4338ca;
+}
+
+body.dark {
+  --bg: #0f172a;
+  --card: #1e293b;
+  --text: #f1f5f9;
+  --button: #6366f1;
+  --button-hover: #818cf8;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  transition: 0.3s ease;
+}
+
+.container {
+  background: var(--card);
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  text-align: center;
+  width: 350px;
+  transition: 0.3s ease;
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+input {
+  padding: 10px;
+  width: 100px;
+  margin: 5px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.buttons button {
+  margin: 5px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  background: var(--button);
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.buttons button:hover {
+  background: var(--button-hover);
+}
+
+.result {
+  margin-top: 20px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.toggle {
+  margin-top: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  opacity: 0.8;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>MyMathHelper</h1>
+
+  <input type="number" id="num1" placeholder="Number 1">
+  <input type="number" id="num2" placeholder="Number 2">
+
+  <div class="buttons">
+    <button onclick="calculate('+')">+</button>
+    <button onclick="calculate('-')">−</button>
+    <button onclick="calculate('*')">×</button>
+    <button onclick="calculate('/')">÷</button>
+  </div>
+
+  <div class="result" id="result"></div>
+
+  <div class="toggle" onclick="toggleDarkMode()">🌙 Toggle Dark Mode</div>
+</div>
+
+<script>
+function calculate(operator) {
+  let n1 = parseFloat(document.getElementById("num1").value);
+  let n2 = parseFloat(document.getElementById("num2").value);
+
+  if (isNaN(n1) || isNaN(n2)) {
+    document.getElementById("result").innerText = "Please enter valid numbers.";
+    return;
+  }
+
+  let result;
+
+  switch(operator) {
+    case '+': result = n1 + n2; break;
+    case '-': result = n1 - n2; break;
+    case '*': result = n1 * n2; break;
+    case '/':
+      if (n2 === 0) {
+        document.getElementById("result").innerText = "Cannot divide by zero.";
+        return;
+      }
+      result = n1 / n2;
+      break;
+  }
+
+  document.getElementById("result").innerText = "Result: " + result;
+}
+
+function toggleDarkMode() {
+  document.body.classList.toggle("dark");
+}
+</script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MyMathHelper | Smart Math Learning</title>
 
 <style>
@@ -479,4 +621,5 @@ displayLeaderboard();
 
 </body>
 </html>
+
 
